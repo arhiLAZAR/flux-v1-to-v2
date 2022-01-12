@@ -1,0 +1,13 @@
+---
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: apache
+  namespace: apache
+spec:
+  chart:
+    repository: https://charts.bitnami.com/bitnami
+    name: apache
+    version: 8.12.1
+  values:
+    replicaCount: 2

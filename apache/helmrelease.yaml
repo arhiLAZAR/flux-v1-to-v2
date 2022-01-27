@@ -10,4 +10,4 @@ spec:
     name: apache
     version: 8.12.1
   values:
-    replicaCount: 2
+    replicaCount: 1

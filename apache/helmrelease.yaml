@@ -5,6 +5,7 @@ metadata:
   name: apache
   namespace: apache
 spec:
+  releaseName: apache-apache
   interval: 10m
   chart:
     spec:

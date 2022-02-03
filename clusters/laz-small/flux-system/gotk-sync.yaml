@@ -20,7 +20,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./clusters/laz-small/
+  path: ./clusters/laz-small
   prune: true
   sourceRef:
     kind: GitRepository

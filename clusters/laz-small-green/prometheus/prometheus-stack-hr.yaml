@@ -14,10 +14,6 @@ spec:
         name: prometheus
         namespace: flux-system
       interval: 10m
-  valuesFrom:
-    - kind: Secret
-      name: prom-stack-values
-      valuesKey: values.yaml
   values:
     fullnameOverride: "prom"
     prometheus:

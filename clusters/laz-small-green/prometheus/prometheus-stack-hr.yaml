@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: prometheus-stack
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      version: 30.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus
+        namespace: flux-system
+      interval: 10m
+  valuesFrom:
+    - kind: Secret
+      name: prom-stack-values
+      valuesKey: values.yaml
+  values:
+    fullnameOverride: "prom"
+    prometheus:
+      prometheusSpec:
+        replicas: 2
+        externalUrl: http://prom.green.arhilazar.ru
+        retention: 1w
+        ruleSelector:
+          matchLabels:
+            prometheus: k8s
+            role: alert-rules
+        resources:
+          requests:
+            memory: 2048Mi
+            cpu: 2
+      ingress:
+        enabled: true
+        hosts: [ "prom.green.arhilazar.ru" ]
+        paths: [ "/" ]
+        pathType: ImplementationSpecific
+    alertmanager:
+      ingress:
+        enabled: true
+        hosts: [ "alert.green.arhilazar.ru" ]
+        paths: [ "/" ]
+        pathType: ImplementationSpecific
+    grafana:
+      fullnameOverride: "grafana"
+      adminUser: admin
+      ingress:
+        enabled: true
+        hosts: [ "grafana.green.arhilazar.ru" ]
+        paths: [ "/" ]
+        pathType: ImplementationSpecific
+    prometheus-node-exporter:
+      fullnameOverride: "node-exporter"
+    kube-state-metrics:
+      fullnameOverride: "kube-state-metrics"
